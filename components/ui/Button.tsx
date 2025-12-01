@@ -11,24 +11,26 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ variant = 'primary', fullWidth = false, className = '', children, ...props }, ref) => {
     const baseStyles = `
       inline-flex items-center justify-center
-      px-6 py-[18px] rounded-xl
-      text-base font-semibold
-      transition-all duration-200
+      px-6 py-[18px] rounded-md
+      text-base font-bold
+      transition-all duration-200 ease-spring
       focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2
       disabled:opacity-50 disabled:cursor-not-allowed
-      active:scale-[0.98]
+      active:scale-[0.97]
     `;
 
     const variantStyles = {
       primary: `
-        bg-primary text-white
-        hover:bg-[#0369A1]
-        shadow-sm
+        gradient-primary text-white
+        shadow-button
+        hover:shadow-button-hover hover:-translate-y-0.5
+        active:translate-y-0
       `,
       secondary: `
-        bg-white text-gray-900
-        border-2 border-divider
-        hover:border-primary hover:text-primary
+        bg-primary-light text-primary-deep font-semibold
+        border border-primary/20
+        hover:bg-primary/10 hover:border-primary/30 hover:-translate-y-0.5
+        active:bg-primary/15
       `,
     };
 

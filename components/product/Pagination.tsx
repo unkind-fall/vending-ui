@@ -10,21 +10,22 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Pagination
   if (totalPages <= 1) return null;
 
   return (
-    <div className="flex items-center justify-center gap-4 py-2">
+    <div className="flex items-center justify-center gap-5 py-2.5 px-1">
       {/* Previous Button */}
       <button
         className={`
-          w-8 h-8
-          rounded-full
-          border-2 border-divider
+          w-[38px] h-[38px]
+          rounded-lg
           bg-white
-          text-gray-600
-          text-lg font-medium
-          transition-all duration-200
+          text-text-secondary
+          text-lg font-bold
+          transition-all duration-200 ease-spring
           flex items-center justify-center
+          shadow-soft
+          border border-primary/10
           ${currentPage === 1
-            ? 'opacity-40 cursor-not-allowed'
-            : 'hover:border-primary hover:text-primary'
+            ? 'opacity-30 cursor-not-allowed'
+            : 'hover:bg-primary hover:text-white hover:scale-[1.08] hover:shadow-active hover:border-primary'
           }
           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2
         `}
@@ -42,12 +43,12 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Pagination
             key={i}
             onClick={() => onPageChange(i + 1)}
             className={`
-              h-2 rounded-full
-              transition-all duration-200
+              h-2.5 rounded-full
+              transition-all duration-200 ease-spring
               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2
               ${currentPage === i + 1
-                ? 'w-6 bg-primary'
-                : 'w-2 bg-divider hover:bg-gray-400'
+                ? 'w-7 gradient-primary shadow-active'
+                : 'w-2.5 bg-primary-light hover:bg-primary/30 hover:scale-[1.2]'
               }
             `}
             aria-label={`Page ${i + 1}`}
@@ -59,17 +60,18 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Pagination
       {/* Next Button */}
       <button
         className={`
-          w-8 h-8
-          rounded-full
-          border-2 border-divider
+          w-[38px] h-[38px]
+          rounded-lg
           bg-white
-          text-gray-600
-          text-lg font-medium
-          transition-all duration-200
+          text-text-secondary
+          text-lg font-bold
+          transition-all duration-200 ease-spring
           flex items-center justify-center
+          shadow-soft
+          border border-primary/10
           ${currentPage === totalPages
-            ? 'opacity-40 cursor-not-allowed'
-            : 'hover:border-primary hover:text-primary'
+            ? 'opacity-30 cursor-not-allowed'
+            : 'hover:bg-primary hover:text-white hover:scale-[1.08] hover:shadow-active hover:border-primary'
           }
           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2
         `}

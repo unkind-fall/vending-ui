@@ -60,7 +60,7 @@ export default function BrowsePage() {
       <PromoBanner />
 
       {/* Content Area */}
-      <div className="flex-1 flex gap-3 p-4 min-h-0">
+      <div className="flex-1 flex gap-4 px-4 py-4 min-h-0">
         {/* Category Sidebar */}
         <CategorySidebar
           categories={categories}

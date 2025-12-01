@@ -8,15 +8,15 @@ interface ToastProps {
 
 export function Toast({ toast }: ToastProps) {
   const typeStyles = {
-    success: 'bg-success-bg text-success-text',
-    error: 'bg-error-bg text-error-text',
-    warning: 'bg-warning-bg text-warning-text',
+    success: 'border-l-success',
+    error: 'border-l-error',
+    warning: 'border-l-warning',
   };
 
   const iconBgStyles = {
-    success: 'bg-[#16A34A]',
-    error: 'bg-error-text',
-    warning: 'bg-[#F59E0B]',
+    success: 'bg-success text-white',
+    error: 'bg-error text-white',
+    warning: 'bg-warning text-text-primary',
   };
 
   return (
@@ -24,12 +24,14 @@ export function Toast({ toast }: ToastProps) {
       className={`
         absolute top-20 left-1/2 -translate-x-1/2
         z-[1000]
-        flex items-center gap-2.5
-        px-6 py-3.5
-        rounded-xl
-        text-sm font-semibold
+        flex items-center gap-3
+        px-5 py-3.5
+        bg-white
+        rounded-lg
+        border-l-4
+        text-sm font-semibold text-text-primary
         animate-slide-down
-        shadow-lg
+        shadow-hover
         ${typeStyles[toast.type]}
       `}
       role="alert"
@@ -37,10 +39,10 @@ export function Toast({ toast }: ToastProps) {
     >
       <span
         className={`
-          w-6 h-6
+          w-[26px] h-[26px]
           rounded-full
           flex items-center justify-center
-          text-xs text-white
+          text-xs font-bold
           ${iconBgStyles[toast.type]}
         `}
       >

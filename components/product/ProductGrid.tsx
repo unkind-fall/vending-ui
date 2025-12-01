@@ -22,7 +22,7 @@ export function ProductGrid({
   // Featured layout with explicit grid positioning
   if (isFeatured && gridConfig.layout) {
     return (
-      <div className="grid grid-cols-3 grid-rows-3 gap-2 h-full">
+      <div className="grid grid-cols-3 grid-rows-3 gap-2.5 h-full pr-0.5">
         {gridConfig.layout.map((layoutItem) => {
           const product = products.find(p => p.id === layoutItem.id);
           if (!product) return null;
@@ -42,7 +42,13 @@ export function ProductGrid({
 
   // Regular 3x3 grid
   return (
-    <div className="grid grid-cols-3 gap-2">
+    <div
+      className="grid gap-4 auto-rows-fr p-1"
+      style={{
+        gridTemplateColumns: `repeat(${gridConfig.columns}, 1fr)`,
+        gridTemplateRows: `repeat(${gridConfig.rows}, 1fr)`,
+      }}
+    >
       {products.map((product, idx) => (
         <ProductCard
           key={product.id}

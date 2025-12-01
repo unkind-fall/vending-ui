@@ -12,28 +12,30 @@ export function ErrorScreen({ onRetry, onCancel }: ErrorScreenProps) {
     <div className="flex-1 flex items-center justify-center p-6">
       <div className="
         w-full max-w-[320px]
-        bg-card
-        rounded-2xl
-        shadow-lg
-        p-8
+        bg-white
+        rounded-xl
+        shadow-error
+        border border-error/20
+        p-7
         flex flex-col items-center gap-6
       ">
         {/* Error Icon */}
         <div className="
           w-20 h-20
           rounded-full
-          bg-error-bg
+          gradient-error
           flex items-center justify-center
-          text-3xl text-error-text
+          text-4xl text-white
+          shadow-error
         ">
           ✕
         </div>
 
-        <h2 className="text-2xl font-bold text-gray-900">
+        <h2 className="text-2xl font-bold text-text-primary">
           Payment Failed
         </h2>
 
-        <p className="text-sm text-gray-500 text-center">
+        <p className="text-sm font-medium text-text-secondary text-center">
           We couldn&apos;t process your payment. Please try again or use a different payment method.
         </p>
 
