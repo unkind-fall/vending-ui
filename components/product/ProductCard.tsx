@@ -1,8 +1,8 @@
 'use client';
 
 import type { Product } from '@/lib/data/products';
-import { getInitials, getStatusBadge } from '@/lib/utils/helpers';
-import { useMarqueeAnimation } from '@/hooks/useMarqueeAnimation';
+import { getInitials } from '@/lib/utils/helpers';
+import { MarqueeText } from '@/components/ui/MarqueeText';
 
 interface ProductCardProps {
   product: Product;
@@ -11,109 +11,113 @@ interface ProductCardProps {
   animationDelay?: number;
 }
 
-// Saturated pastel gradients for product cards
+// Neon/Vibrant gradients for light mode (more subtle)
 const getCardGradient = (slot: string): string => {
   const gradients = [
-    'linear-gradient(135deg, #DDD6FE 0%, #C4B5FD 100%)', // Violet
-    'linear-gradient(135deg, #A5F3FC 0%, #67E8F9 100%)', // Cyan
-    'linear-gradient(135deg, #FBCFE8 0%, #F9A8D4 100%)', // Pink
-    'linear-gradient(135deg, #D9F99D 0%, #BEF264 100%)', // Lime
-    'linear-gradient(135deg, #FED7AA 0%, #FDBA74 100%)', // Orange
-    'linear-gradient(135deg, #C7D2FE 0%, #A5B4FC 100%)', // Indigo
+    'linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(124, 58, 237, 0.02) 100%)', // Violet
+    'linear-gradient(135deg, rgba(34, 211, 238, 0.08) 0%, rgba(8, 145, 178, 0.02) 100%)', // Cyan
+    'linear-gradient(135deg, rgba(244, 114, 182, 0.08) 0%, rgba(219, 39, 119, 0.02) 100%)', // Pink
+    'linear-gradient(135deg, rgba(163, 230, 53, 0.08) 0%, rgba(101, 163, 13, 0.02) 100%)', // Lime
+    'linear-gradient(135deg, rgba(251, 146, 60, 0.08) 0%, rgba(234, 88, 12, 0.02) 100%)', // Orange
   ];
   const index = (slot.charCodeAt(0) + slot.charCodeAt(1)) % gradients.length;
   return gradients[index];
 };
 
-// Badge styles - Bold & Saturated
-const getBadgeStyle = (status: string, promo?: boolean): { gradient: string; text: string; label: string } | null => {
+const getBadgeStyle = (status: string, promo?: boolean): { className: string; label: string } | null => {
   if (status === 'sold_out') {
-    return { gradient: 'linear-gradient(135deg, #EF4444 0%, #DC2626 100%)', text: '#FFFFFF', label: 'Out of Stock' };
+    return { className: 'bg-red-100 text-red-700 border-red-200', label: 'Out of Stock' };
   }
   if (status === 'low_stock') {
-    return { gradient: 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)', text: '#1E1B4B', label: 'Low Stock' };
+    return { className: 'bg-amber-100 text-amber-700 border-amber-200', label: 'Low Stock' };
   }
   if (status === 'age_restricted') {
-    return { gradient: 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)', text: '#1E1B4B', label: 'ID Required' };
+    return { className: 'bg-amber-100 text-amber-700 border-amber-200', label: '18+' };
   }
   if (promo) {
-    return { gradient: 'linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%)', text: '#FFFFFF', label: 'Deal' };
+    return { className: 'bg-primary-light/20 text-primary-deep border-primary/20', label: 'Deal' };
   }
   return null;
 };
 
 export function ProductCard({ product, isSelected, onSelect, animationDelay = 0 }: ProductCardProps) {
-  const setupMarquee = useMarqueeAnimation();
-  const badge = getStatusBadge(product.status, product.promo);
   const badgeStyle = getBadgeStyle(product.status, product.promo);
   const isDisabled = product.status === 'sold_out';
   const bgGradient = getCardGradient(product.slot);
 
   return (
     <div className="flex flex-col animate-fade-in group" style={{ animationDelay: `${animationDelay}s` }}>
-      {/* Card (image area only) */}
+      {/* Card Container */}
       <button
         className={`
           relative
           aspect-square
           w-full
-          rounded-[20px]
+          rounded-2xl
           overflow-hidden
-          border border-white/60
-          shadow-card
+          border
           transition-all duration-300 ease-spring
           ${isDisabled
-            ? 'opacity-60 cursor-not-allowed grayscale-[0.8]'
-            : 'cursor-pointer hover:shadow-hover hover:-translate-y-1.5 hover:scale-[1.02] hover:border-primary/30'
+            ? 'opacity-50 cursor-not-allowed border-border grayscale bg-bg-subtle'
+            : 'cursor-pointer hover:shadow-hover hover:-translate-y-1 hover:border-primary/30 border-border'
           }
           ${isSelected
-            ? 'ring-4 ring-primary/20 shadow-active scale-[0.98]'
-            : ''
+            ? 'ring-2 ring-primary shadow-active scale-[0.98] border-primary'
+            : 'bg-bg-card'
           }
-          active:scale-[0.96]
-          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2
         `}
         onClick={() => onSelect(product)}
         disabled={isDisabled}
-        style={{ background: bgGradient }}
+        style={{ background: isDisabled ? undefined : bgGradient }}
         aria-label={`${product.name}, $${product.price.toFixed(2)}${isDisabled ? ', out of stock' : ''}`}
       >
         {/* Status Badge */}
         {badgeStyle && (
           <div
-            className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-full text-[10px] font-bold z-10 shadow-badge tracking-wide uppercase"
-            style={{ background: badgeStyle.gradient, color: badgeStyle.text }}
+            className={`
+              absolute top-3 left-3 px-2 py-0.5 rounded-full text-[10px] font-bold z-10 
+              border backdrop-blur-md uppercase tracking-wider
+              ${badgeStyle.className}
+            `}
           >
             {badgeStyle.label}
           </div>
         )}
 
-        {/* Placeholder Content */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center glossy-overlay">
-          <span className="text-4xl font-display font-bold text-primary/20 group-hover:text-primary/30 transition-colors duration-300">
-            {getInitials(product.name)}
-          </span>
-          <span className="mt-2 text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/40 backdrop-blur-sm text-text-secondary/70 border border-white/30">
+        {/* Slot Number */}
+        <div className="absolute top-3 right-3 px-2 py-0.5 rounded-full bg-white/80 backdrop-blur-md border border-border shadow-sm">
+          <span className="text-[10px] font-mono font-bold text-text-secondary">
             {product.slot}
           </span>
         </div>
 
-        {isDisabled && (
-          <div className="absolute inset-0 bg-white/50 backdrop-blur-[1px]" />
+        {/* Placeholder Visual */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className={`text-5xl font-display font-bold transition-colors duration-300 ${isDisabled ? 'text-text-muted/20' : 'text-primary/10 group-hover:text-primary/20'
+            }`}>
+            {getInitials(product.name)}
+          </span>
+        </div>
+
+        {/* Add Overlay (Hover) */}
+        {!isDisabled && (
+          <div className="absolute inset-0 bg-white/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+            <div className="bg-primary text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg transform scale-90 group-hover:scale-100 transition-transform duration-300">
+              Add
+            </div>
+          </div>
         )}
       </button>
 
-      {/* Product Info (outside the card) */}
+      {/* Product Info */}
       <div className="pt-3 px-1">
-        <div
-          ref={setupMarquee}
-          className="overflow-hidden whitespace-nowrap"
-        >
-          <span className="text-[13px] font-bold text-text-primary inline-block tracking-tight group-hover:text-primary transition-colors duration-200">
-            {product.name}
-          </span>
+        <div className="h-6 mb-0.5">
+          <MarqueeText
+            text={product.name}
+            className="text-sm font-medium text-text-primary group-hover:text-primary transition-colors"
+          />
         </div>
-        <p className="text-base font-bold text-primary font-display mt-0.5">
+        <p className="text-lg font-bold text-text-primary font-display">
           ${product.price.toFixed(2)}
         </p>
       </div>

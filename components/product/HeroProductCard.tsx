@@ -2,7 +2,7 @@
 
 import type { Product, GridLayoutItem } from '@/lib/data/products';
 import { getInitials } from '@/lib/utils/helpers';
-import { useMarqueeAnimation } from '@/hooks/useMarqueeAnimation';
+import { MarqueeText } from '@/components/ui/MarqueeText';
 
 interface HeroProductCardProps {
   product: Product;
@@ -10,65 +10,64 @@ interface HeroProductCardProps {
   onSelect: (product: Product) => void;
 }
 
-// Saturated pastel gradients for hero cards
+// Neon/Vibrant gradients for hero cards (Light Mode)
 const getHeroGradient = (slot: string): string => {
   const gradients: Record<string, string> = {
-    'H1': 'linear-gradient(135deg, #C7D2FE 0%, #A5B4FC 100%)', // Indigo
-    'H2': 'linear-gradient(135deg, #FBCFE8 0%, #F9A8D4 100%)', // Pink
-    'A1': 'linear-gradient(135deg, #A5F3FC 0%, #67E8F9 100%)', // Cyan
-    'C2': 'linear-gradient(135deg, #D9F99D 0%, #BEF264 100%)', // Lime
-    'E3': 'linear-gradient(135deg, #DDD6FE 0%, #C4B5FD 100%)', // Violet
-    'B1': 'linear-gradient(135deg, #FED7AA 0%, #FDBA74 100%)', // Orange
+    'H1': 'linear-gradient(135deg, rgba(167, 139, 250, 0.1) 0%, rgba(124, 58, 237, 0.02) 100%)', // Indigo
+    'H2': 'linear-gradient(135deg, rgba(244, 114, 182, 0.1) 0%, rgba(219, 39, 119, 0.02) 100%)', // Pink
+    'A1': 'linear-gradient(135deg, rgba(34, 211, 238, 0.1) 0%, rgba(8, 145, 178, 0.02) 100%)', // Cyan
+    'C2': 'linear-gradient(135deg, rgba(163, 230, 53, 0.1) 0%, rgba(101, 163, 13, 0.02) 100%)', // Lime
+    'E3': 'linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(124, 58, 237, 0.02) 100%)', // Violet
+    'B1': 'linear-gradient(135deg, rgba(251, 146, 60, 0.1) 0%, rgba(234, 88, 12, 0.02) 100%)', // Orange
   };
-  return gradients[slot] || 'linear-gradient(135deg, #DDD6FE 0%, #C4B5FD 100%)';
+  return gradients[slot] || 'linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(124, 58, 237, 0.02) 100%)';
 };
 
-// Badge styles - Bold & Saturated
-const getBadgeStyle = (badge?: string, savings?: string): { gradient: string; text: string; label: string } | null => {
+// Badge styles - Bold & Saturated (Light Mode)
+const getBadgeStyle = (badge?: string, savings?: string): { className: string; label: string } | null => {
   if (savings) {
-    return { gradient: 'linear-gradient(135deg, #EC4899 0%, #DB2777 100%)', text: '#FFFFFF', label: savings };
+    return { className: 'bg-pink-100 text-pink-700 border-pink-200', label: savings };
   }
   if (!badge) return null;
 
-  const styles: Record<string, { gradient: string; text: string }> = {
-    'NEW': { gradient: 'linear-gradient(135deg, #06B6D4 0%, #0891B2 100%)', text: '#FFFFFF' },
-    'Best Seller': { gradient: 'linear-gradient(135deg, #F97316 0%, #EA580C 100%)', text: '#FFFFFF' },
-    'Staff Pick': { gradient: 'linear-gradient(135deg, #84CC16 0%, #65A30D 100%)', text: '#FFFFFF' },
-    'Healthy': { gradient: 'linear-gradient(135deg, #84CC16 0%, #65A30D 100%)', text: '#FFFFFF' },
-    'Morning': { gradient: 'linear-gradient(135deg, #F97316 0%, #EA580C 100%)', text: '#FFFFFF' },
+  const styles: Record<string, string> = {
+    'NEW': 'bg-cyan-100 text-cyan-700 border-cyan-200',
+    'Best Seller': 'bg-orange-100 text-orange-700 border-orange-200',
+    'Staff Pick': 'bg-lime-100 text-lime-700 border-lime-200',
+    'Healthy': 'bg-green-100 text-green-700 border-green-200',
+    'Morning': 'bg-amber-100 text-amber-700 border-amber-200',
   };
 
-  return { ...styles[badge] || { gradient: 'linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%)', text: '#FFFFFF' }, label: badge };
+  return { className: styles[badge] || 'bg-primary-light/20 text-primary-deep border-primary/20', label: badge };
 };
 
 export function HeroProductCard({ product, layoutItem, onSelect }: HeroProductCardProps) {
-  const setupMarquee = useMarqueeAnimation();
   const bgGradient = getHeroGradient(product.slot);
   const { col, row, colSpan, rowSpan } = layoutItem;
   const badgeInfo = getBadgeStyle(product.badge, product.savings);
 
   return (
     <div
-      className="flex flex-col group"
+      className="flex flex-col group animate-fade-in"
       style={{
         gridColumn: `${col} / span ${colSpan}`,
         gridRow: `${row} / span ${rowSpan}`,
       }}
     >
-      {/* Card (image area only) */}
+      {/* Card Container */}
       <button
         className={`
           relative
           flex-1
           min-h-0
-          rounded-[24px]
+          rounded-3xl
           overflow-hidden
-          border border-white/60
-          shadow-card
+          border
           transition-all duration-300 ease-spring
-          hover:shadow-hover hover:-translate-y-1.5 hover:scale-[1.01] hover:border-primary/30
+          hover:shadow-hover hover:-translate-y-1 hover:border-primary/30 border-border
           active:scale-[0.98]
           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2
+          bg-bg-card
         `}
         onClick={() => onSelect(product)}
         style={{ background: bgGradient }}
@@ -76,36 +75,48 @@ export function HeroProductCard({ product, layoutItem, onSelect }: HeroProductCa
         {/* Badge */}
         {badgeInfo && (
           <div
-            className="absolute top-3 left-3 px-3 py-1.5 rounded-full text-[11px] font-bold z-10 shadow-badge tracking-wide uppercase"
-            style={{ background: badgeInfo.gradient, color: badgeInfo.text }}
+            className={`
+              absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-bold z-10 
+              border backdrop-blur-md uppercase tracking-wider shadow-sm
+              ${badgeInfo.className}
+            `}
           >
             {badgeInfo.label}
           </div>
         )}
 
-        {/* Placeholder Content */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center glossy-overlay">
-          <span className={`font-display font-bold text-primary/20 group-hover:text-primary/30 transition-colors duration-300 ${colSpan >= 2 || rowSpan >= 2 ? 'text-7xl' : 'text-5xl'}`}>
-            {getInitials(product.name)}
-          </span>
-          <span className="mt-2 text-xs font-bold px-2.5 py-1 rounded-full bg-white/40 backdrop-blur-sm text-text-secondary/70 border border-white/30">
+        {/* Slot Number */}
+        <div className="absolute top-4 right-4 px-2.5 py-1 rounded-full bg-white/80 backdrop-blur-md border border-border shadow-sm">
+          <span className="text-xs font-mono font-bold text-text-secondary">
             {product.slot}
           </span>
         </div>
-      </button>
 
-      {/* Product Info (outside the card) */}
-      <div className="pt-3 px-1">
-        <div
-          ref={setupMarquee}
-          className="overflow-hidden whitespace-nowrap"
-        >
-          <span className="text-sm font-bold text-text-primary inline-block tracking-tight group-hover:text-primary transition-colors duration-200">
-            {product.name}
+        {/* Placeholder Visual */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <span className={`font-display font-bold text-primary/10 group-hover:text-primary/20 transition-colors duration-300 ${colSpan >= 2 || rowSpan >= 2 ? 'text-8xl' : 'text-6xl'}`}>
+            {getInitials(product.name)}
           </span>
         </div>
-        <div className="flex items-center gap-2 mt-0.5">
-          <span className="text-lg font-bold text-primary font-display">
+
+        {/* Add Overlay (Hover) */}
+        <div className="absolute inset-0 bg-white/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+          <div className="bg-primary text-white px-6 py-3 rounded-full font-bold text-base shadow-lg transform scale-90 group-hover:scale-100 transition-transform duration-300">
+            Add to Cart
+          </div>
+        </div>
+      </button>
+
+      {/* Product Info */}
+      <div className="pt-3 px-2">
+        <div className="h-6 mb-1">
+          <MarqueeText
+            text={product.name}
+            className="text-base font-medium text-text-primary group-hover:text-primary transition-colors"
+          />
+        </div>
+        <div className="flex items-center gap-3">
+          <span className="text-xl font-bold text-text-primary font-display">
             ${product.price.toFixed(2)}
           </span>
           {product.originalPrice && (
