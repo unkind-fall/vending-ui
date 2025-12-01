@@ -1,0 +1,150 @@
+@import "tailwindcss";
+
+@theme {
+  /* Custom colors */
+  --color-background: #F4F7FB;
+  --color-card: #FFFFFF;
+  --color-divider: #D6DFEA;
+  --color-primary: #0284C7;
+  --color-accent: #14B8A6;
+  --color-selection: #E0F2FE;
+  --color-success-bg: #DCFCE7;
+  --color-success-text: #166534;
+  --color-error-bg: #FEE2E2;
+  --color-error-text: #DC2626;
+  --color-warning-bg: #FEF3C7;
+  --color-warning-text: #92400E;
+
+  /* Custom animations */
+  --animate-fade-in: fadeIn 0.3s ease forwards;
+  --animate-slide-down: slideDown 0.3s ease forwards;
+  --animate-spin-slow: spin 1s linear infinite;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -20px);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+  }
+
+  @keyframes marquee {
+    0%, 10% {
+      transform: translateX(0);
+    }
+    45%, 55% {
+      transform: translateX(var(--scroll-distance, 0));
+    }
+    90%, 100% {
+      transform: translateX(0);
+    }
+  }
+}
+
+:root {
+  /* Base colors */
+  --background: #F4F7FB;
+  --card: #FFFFFF;
+  --divider: #D6DFEA;
+  --primary: #0284C7;
+  --accent: #14B8A6;
+  --selection: #E0F2FE;
+
+  /* Text colors */
+  --text-primary: #111827;
+  --text-secondary: #6B7280;
+
+  /* Status colors */
+  --success-bg: #DCFCE7;
+  --success-text: #166534;
+  --error-bg: #FEE2E2;
+  --error-text: #DC2626;
+  --warning-bg: #FEF3C7;
+  --warning-text: #92400E;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Focus styles for accessibility */
+:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--divider);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-secondary);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-primary);
+}
+
+/* Animation utilities */
+@layer utilities {
+  .animate-stagger-1 {
+    animation-delay: 0.05s;
+  }
+  .animate-stagger-2 {
+    animation-delay: 0.1s;
+  }
+  .animate-stagger-3 {
+    animation-delay: 0.15s;
+  }
+  .animate-stagger-4 {
+    animation-delay: 0.2s;
+  }
+  .animate-stagger-5 {
+    animation-delay: 0.25s;
+  }
+  .animate-stagger-6 {
+    animation-delay: 0.3s;
+  }
+  .animate-stagger-7 {
+    animation-delay: 0.35s;
+  }
+  .animate-stagger-8 {
+    animation-delay: 0.4s;
+  }
+}
