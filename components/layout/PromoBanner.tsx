@@ -7,10 +7,10 @@ export function PromoBanner() {
           w-full
           aspect-video
           max-h-[286px]
-          rounded-3xl
+          rounded-2xl
           border border-border
           flex flex-col items-center justify-center
-          gap-3
+          gap-2
           overflow-hidden
           bg-bg-card
           shadow-card
@@ -25,12 +25,12 @@ export function PromoBanner() {
         <div className="absolute -inset-[100%] bg-gradient-to-r from-transparent via-white/40 to-transparent rotate-45 animate-shimmer" />
 
         {/* Content */}
-        <div className="relative z-10 flex flex-col items-center gap-2">
-          <span className="text-4xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent-cyan tracking-tight drop-shadow-sm">
+        <div className="relative z-10 flex flex-col items-center gap-1.5">
+          <span className="text-3xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent-cyan tracking-tight drop-shadow-sm">
             16:9 Promo Image
           </span>
           <span
-            className="text-xs font-mono font-medium px-3 py-1 rounded-full bg-white/80 backdrop-blur-md text-text-muted border border-border shadow-sm"
+            className="text-[10px] font-mono font-medium px-2.5 py-0.5 rounded-full bg-white/80 backdrop-blur-md text-text-muted border border-border shadow-sm"
           >
             508 × 286
           </span>

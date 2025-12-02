@@ -48,7 +48,7 @@ export function HeroProductCard({ product, layoutItem, onSelect }: HeroProductCa
 
   return (
     <div
-      className="flex flex-col group animate-fade-in"
+      className="flex flex-col group animate-fade-in h-full"
       style={{
         gridColumn: `${col} / span ${colSpan}`,
         gridRow: `${row} / span ${rowSpan}`,
@@ -60,11 +60,11 @@ export function HeroProductCard({ product, layoutItem, onSelect }: HeroProductCa
           relative
           flex-1
           min-h-0
-          rounded-3xl
+          rounded-2xl
           overflow-hidden
           border
           transition-all duration-300 ease-spring
-          hover:shadow-hover hover:-translate-y-1 hover:border-primary/30 border-border
+          hover:shadow-hover hover:-translate-y-0.5 hover:border-primary/30 border-border
           active:scale-[0.98]
           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2
           bg-bg-card
@@ -76,7 +76,7 @@ export function HeroProductCard({ product, layoutItem, onSelect }: HeroProductCa
         {badgeInfo && (
           <div
             className={`
-              absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-bold z-10 
+              absolute top-3 left-3 px-2 py-1 rounded-full text-[10px] font-bold z-10 
               border backdrop-blur-md uppercase tracking-wider shadow-sm
               ${badgeInfo.className}
             `}
@@ -86,41 +86,34 @@ export function HeroProductCard({ product, layoutItem, onSelect }: HeroProductCa
         )}
 
         {/* Slot Number */}
-        <div className="absolute top-4 right-4 px-2.5 py-1 rounded-full bg-white/80 backdrop-blur-md border border-border shadow-sm">
-          <span className="text-xs font-mono font-bold text-text-secondary">
+        <div className="absolute top-3 right-3 px-2 py-0.5 rounded-full bg-white/80 backdrop-blur-md border border-border shadow-sm">
+          <span className="text-[10px] font-mono font-bold text-text-secondary">
             {product.slot}
           </span>
         </div>
 
         {/* Placeholder Visual */}
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className={`font-display font-bold text-primary/10 group-hover:text-primary/20 transition-colors duration-300 ${colSpan >= 2 || rowSpan >= 2 ? 'text-8xl' : 'text-6xl'}`}>
+          <span className={`font-display font-bold text-primary/10 group-hover:text-primary/20 transition-colors duration-300 ${colSpan >= 2 || rowSpan >= 2 ? 'text-7xl' : 'text-5xl'}`}>
             {getInitials(product.name)}
           </span>
-        </div>
-
-        {/* Add Overlay (Hover) */}
-        <div className="absolute inset-0 bg-white/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
-          <div className="bg-primary text-white px-6 py-3 rounded-full font-bold text-base shadow-lg transform scale-90 group-hover:scale-100 transition-transform duration-300">
-            Add to Cart
-          </div>
         </div>
       </button>
 
       {/* Product Info */}
-      <div className="pt-3 px-2">
-        <div className="h-6 mb-1">
+      <div className="pt-2 px-2">
+        <div className="h-5 mb-0.5">
           <MarqueeText
             text={product.name}
-            className="text-base font-medium text-text-primary group-hover:text-primary transition-colors"
+            className="text-sm font-medium text-text-primary group-hover:text-primary transition-colors"
           />
         </div>
-        <div className="flex items-center gap-3">
-          <span className="text-xl font-bold text-text-primary font-display">
+        <div className="flex items-center gap-2">
+          <span className="text-lg font-bold text-text-primary font-display">
             ${product.price.toFixed(2)}
           </span>
           {product.originalPrice && (
-            <span className="text-sm font-medium text-text-muted line-through decoration-2 decoration-text-muted/50">
+            <span className="text-xs font-medium text-text-muted line-through decoration-2 decoration-text-muted/50">
               ${product.originalPrice.toFixed(2)}
             </span>
           )}

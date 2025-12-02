@@ -4,7 +4,7 @@ export function BottomBar() {
   return (
     <div className="
       mt-auto
-      px-6 py-4
+      px-5 py-3
       bg-bg-card/80
       backdrop-blur-md
       border-t border-border
@@ -14,10 +14,10 @@ export function BottomBar() {
       {/* Help Button */}
       <button
         className="
-          flex items-center gap-2.5
-          px-3 py-2
-          rounded-xl
-          text-sm font-semibold text-text-primary
+          flex items-center gap-2
+          px-2.5 py-1.5
+          rounded-lg
+          text-xs font-semibold text-text-primary
           hover:bg-bg-subtle
           transition-all duration-300 ease-spring
           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2
@@ -26,11 +26,11 @@ export function BottomBar() {
         aria-label="Get help"
       >
         <span className="
-          w-9 h-9
+          w-7 h-7
           rounded-full
           bg-gradient-to-br from-primary to-primary-deep
           flex items-center justify-center
-          text-lg font-bold text-white
+          text-sm font-bold text-white
           shadow-active
           group-hover:scale-110
           transition-all duration-300 ease-spring
@@ -41,20 +41,20 @@ export function BottomBar() {
       </button>
 
       {/* QR Section */}
-      <div className="flex items-center gap-4">
-        <span className="text-sm font-medium text-text-muted">Scan to pay with app</span>
+      <div className="flex items-center gap-3">
+        <span className="text-xs font-medium text-text-muted">Scan to pay with app</span>
         <div className="
-          w-12 h-12
+          w-10 h-10
           bg-white
-          rounded-xl
+          rounded-lg
           flex items-center justify-center
           shadow-sm
           border border-border
           overflow-hidden
         ">
           {/* Mock QR Code Pattern */}
-          <div className="w-full h-full bg-white p-1">
-            <div className="w-full h-full border-2 border-text-primary border-dashed opacity-20" />
+          <div className="w-full h-full bg-white p-0.5">
+            <div className="w-full h-full border border-text-primary border-dashed opacity-20" />
           </div>
         </div>
       </div>
@@ -62,10 +62,10 @@ export function BottomBar() {
       {/* Language Button */}
       <button
         className="
-          flex items-center gap-2
-          px-4 py-2.5
-          rounded-xl
-          text-sm font-semibold text-text-primary
+          flex items-center gap-1.5
+          px-3 py-2
+          rounded-lg
+          text-xs font-semibold text-text-primary
           bg-bg-subtle
           border border-border
           hover:bg-white hover:shadow-sm
@@ -75,7 +75,7 @@ export function BottomBar() {
         aria-label="Change language"
       >
         <span className="font-display">EN</span>
-        <span className="text-text-muted text-[10px]">▼</span>
+        <span className="text-text-muted text-[9px]">▼</span>
       </button>
     </div>
   );

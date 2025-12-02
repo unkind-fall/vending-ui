@@ -16,7 +16,17 @@ export function MarqueeText({ text, className = '', speed = 10 }: MarqueeTextPro
     useEffect(() => {
         const checkOverflow = () => {
             if (containerRef.current && textRef.current) {
-                setIsOverflowing(textRef.current.offsetWidth > containerRef.current.offsetWidth);
+                const containerWidth = containerRef.current.offsetWidth;
+                const textWidth = textRef.current.offsetWidth;
+                const isOver = textWidth > containerWidth;
+
+                setIsOverflowing(isOver);
+
+                if (isOver && containerRef.current) {
+                    // Calculate distance to scroll: (text width - container width) + 10px buffer
+                    const distance = textWidth - containerWidth + 10;
+                    containerRef.current.style.setProperty('--scroll-distance', `${distance}px`);
+                }
             }
         };
 
@@ -31,17 +41,12 @@ export function MarqueeText({ text, className = '', speed = 10 }: MarqueeTextPro
             className={`relative overflow-hidden whitespace-nowrap ${className}`}
         >
             <div
-                className={`inline-block ${isOverflowing ? 'animate-marquee' : ''}`}
-                style={isOverflowing ? { '--marquee-duration': `${speed}s` } as React.CSSProperties : {}}
+                className={`flex ${isOverflowing ? 'animate-shuttle' : ''}`}
+                style={isOverflowing ? { '--marquee-duration': `${speed}s`, width: 'max-content' } as React.CSSProperties : {}}
             >
-                <span ref={textRef} className="inline-block">
+                <span ref={textRef} className="whitespace-nowrap">
                     {text}
                 </span>
-                {isOverflowing && (
-                    <span className="inline-block pl-4">
-                        {text}
-                    </span>
-                )}
             </div>
         </div>
     );

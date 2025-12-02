@@ -46,20 +46,21 @@ export function ProductCard({ product, isSelected, onSelect, animationDelay = 0 
   const bgGradient = getCardGradient(product.slot);
 
   return (
-    <div className="flex flex-col animate-fade-in group" style={{ animationDelay: `${animationDelay}s` }}>
+    <div className="flex flex-col animate-fade-in group h-full" style={{ animationDelay: `${animationDelay}s` }}>
       {/* Card Container */}
       <button
         className={`
           relative
-          aspect-square
+          flex-1
+          min-h-0
           w-full
-          rounded-2xl
+          rounded-xl
           overflow-hidden
           border
           transition-all duration-300 ease-spring
           ${isDisabled
             ? 'opacity-50 cursor-not-allowed border-border grayscale bg-bg-subtle'
-            : 'cursor-pointer hover:shadow-hover hover:-translate-y-1 hover:border-primary/30 border-border'
+            : 'cursor-pointer hover:shadow-hover hover:-translate-y-0.5 hover:border-primary/30 border-border'
           }
           ${isSelected
             ? 'ring-2 ring-primary shadow-active scale-[0.98] border-primary'
@@ -75,7 +76,7 @@ export function ProductCard({ product, isSelected, onSelect, animationDelay = 0 
         {badgeStyle && (
           <div
             className={`
-              absolute top-3 left-3 px-2 py-0.5 rounded-full text-[10px] font-bold z-10 
+              absolute top-2 left-2 px-1.5 py-0.5 rounded-full text-[9px] font-bold z-10 
               border backdrop-blur-md uppercase tracking-wider
               ${badgeStyle.className}
             `}
@@ -85,39 +86,30 @@ export function ProductCard({ product, isSelected, onSelect, animationDelay = 0 
         )}
 
         {/* Slot Number */}
-        <div className="absolute top-3 right-3 px-2 py-0.5 rounded-full bg-white/80 backdrop-blur-md border border-border shadow-sm">
-          <span className="text-[10px] font-mono font-bold text-text-secondary">
+        <div className="absolute top-2 right-2 px-1.5 py-0.5 rounded-full bg-white/80 backdrop-blur-md border border-border shadow-sm">
+          <span className="text-[9px] font-mono font-bold text-text-secondary">
             {product.slot}
           </span>
         </div>
 
         {/* Placeholder Visual */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className={`text-5xl font-display font-bold transition-colors duration-300 ${isDisabled ? 'text-text-muted/20' : 'text-primary/10 group-hover:text-primary/20'
+          <span className={`text-4xl font-display font-bold transition-colors duration-300 ${isDisabled ? 'text-text-muted/20' : 'text-primary/10 group-hover:text-primary/20'
             }`}>
             {getInitials(product.name)}
           </span>
         </div>
-
-        {/* Add Overlay (Hover) */}
-        {!isDisabled && (
-          <div className="absolute inset-0 bg-white/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
-            <div className="bg-primary text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg transform scale-90 group-hover:scale-100 transition-transform duration-300">
-              Add
-            </div>
-          </div>
-        )}
       </button>
 
       {/* Product Info */}
-      <div className="pt-3 px-1">
-        <div className="h-6 mb-0.5">
+      <div className="pt-2 px-1">
+        <div className="h-5 mb-0.5">
           <MarqueeText
             text={product.name}
-            className="text-sm font-medium text-text-primary group-hover:text-primary transition-colors"
+            className="text-xs font-medium text-text-primary group-hover:text-primary transition-colors"
           />
         </div>
-        <p className="text-lg font-bold text-text-primary font-display">
+        <p className="text-base font-bold text-text-primary font-display">
           ${product.price.toFixed(2)}
         </p>
       </div>

@@ -44,7 +44,7 @@ const config: Config = {
         'fade-in': 'fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
         'slide-up': 'slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
         'scale-in': 'scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
-        'marquee': 'marquee var(--marquee-duration, 10s) linear infinite',
+        'shuttle': 'shuttle var(--marquee-duration, 10s) linear infinite',
         'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
       },
       keyframes: {
@@ -60,9 +60,10 @@ const config: Config = {
           '0%': { opacity: '0', transform: 'scale(0.9)' },
           '100%': { opacity: '1', transform: 'scale(1)' },
         },
-        marquee: {
-          '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(calc(-100% - 1rem))' },
+        shuttle: {
+          '0%, 10%': { transform: 'translateX(0)' },
+          '45%, 55%': { transform: 'translateX(calc(-1 * var(--scroll-distance)))' },
+          '90%, 100%': { transform: 'translateX(0)' },
         },
         pulseGlow: {
           '0%, 100%': { boxShadow: '0 0 20px rgba(124, 58, 237, 0.15)' },

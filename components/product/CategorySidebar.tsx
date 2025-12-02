@@ -14,7 +14,7 @@ export function CategorySidebar({
   onCategoryChange,
 }: CategorySidebarProps) {
   return (
-    <div className="flex flex-col gap-3 w-[100px] shrink-0">
+    <div className="flex flex-col gap-2 w-[90px] shrink-0">
       {categories.map((cat, index) => {
         const isActive = activeCategory === cat.id;
         return (
@@ -24,9 +24,9 @@ export function CategorySidebar({
             className={`
               relative
               w-full
-              px-2 py-4
-              rounded-2xl
-              text-sm font-semibold
+              px-2 py-3
+              rounded-xl
+              text-xs font-semibold
               transition-all duration-300 ease-spring
               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2
               overflow-hidden
@@ -56,7 +56,7 @@ export function CategorySidebar({
 
             {/* Active Indicator Dot */}
             {isActive && (
-              <div className="absolute right-2 top-1/2 -translate-y-1/2 w-1 h-1 rounded-full bg-white shadow-sm" />
+              <div className="absolute right-1.5 top-1/2 -translate-y-1/2 w-1 h-1 rounded-full bg-white shadow-sm" />
             )}
           </button>
         );
